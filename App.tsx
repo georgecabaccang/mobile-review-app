@@ -1,20 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import "react-native-gesture-handler";
+import { StyleSheet } from "react-native";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import React, { useCallback } from "react";
+import DrawerStack from "./routes/DrawerStack";
+
+export type StackParams = {
+    Home: undefined;
+    HomeStack: undefined;
+    AboutStack: undefined;
+    About: undefined;
+    ReviewDetail: { title: string; body: string; rating: number; _id: string } | undefined;
+};
+
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    const [fontsLoaded, fontError] = useFonts({
+        "roboto-regular": require("./assets/fonts/roboto/Roboto-Regular.ttf"),
+        "roboto-bold": require("./assets/fonts/roboto/Roboto-Bold.ttf"),
+        "roboto-medium": require("./assets/fonts/roboto/Roboto-Medium.ttf"),
+    });
+
+    const onLayoutRootView = useCallback(async () => {
+        if (fontsLoaded || fontError) {
+            await SplashScreen.hideAsync();
+        }
+    }, [fontsLoaded, fontError]);
+
+    if (!fontsLoaded && !fontError) {
+        return null;
+    }
+
+    onLayoutRootView();
+
+    return <DrawerStack />;
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        backgroundColor: "#fff",
+        alignItems: "center",
+        justifyContent: "center",
+    },
 });
