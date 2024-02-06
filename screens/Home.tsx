@@ -17,8 +17,8 @@ export type Review = {
 export default function Home() {
     const [reviews, setReviews] = useState<Review[]>([
         { title: "Test 1", body: "This is the review for One.", rating: 5, _id: "1" },
-        { title: "Test 2", body: "This is the review for Two.", rating: 4, _id: "2" },
-        { title: "Test 3", body: "This is the review for Three.", rating: 3, _id: "3" },
+        { title: "Test 2", body: "This is the review for Two.", rating: 4.55, _id: "2" },
+        { title: "Test 3", body: "This is the review for Three.", rating: 2.1, _id: "3" },
     ]);
 
     const handleOnPress = (item: Review) => {

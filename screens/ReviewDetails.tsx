@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { globalStyles } from "../styles/Global";
 import { RouteProp, useRoute, useNavigation } from "@react-navigation/native";
 import { Review } from "./Home";
 import ItemCard from "../shared/ItemCard";
+import Rating from "../components/Rating";
 
 export type Params = {
     details: Review;
@@ -27,11 +28,20 @@ export default function ReviewDetails() {
                     <Text style={globalStyles.titleText}>
                         Review: <Text style={globalStyles.normalText}>{params.body}</Text>
                     </Text>
-                    <Text style={globalStyles.titleText}>
-                        Rating: <Text style={globalStyles.normalText}>{params.rating}</Text>
-                    </Text>
+                    <View style={styles.ratingContainer}>
+                        <Text style={globalStyles.titleText}>Rating:</Text>
+                        <Rating rating={params.rating} />
+                    </View>
                 </View>
             </ItemCard>
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    ratingContainer: {
+        display: "flex",
+        flexDirection: "row",
+        gap: 5,
+    },
+});
